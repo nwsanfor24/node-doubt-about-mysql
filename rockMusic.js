@@ -7,12 +7,20 @@ var connection = mysql.createConnection({
 
     user: "root",
 
-    password: "root",
+    password: "Gu!tar92",
     database: "playlistDB"
 });
 
 connection.connect(function(err) {
     if (err) throw err;
     console.log("connected as id " + connection.threadId);
-    connection.end();
-})
+    afterConnection();
+});
+
+function afterConnection() {
+    connection.query('SELECT * FROM songs', function(err, res) {
+        if (err) throw err;
+        console.log(res);
+        connection.end();
+    });
+}
