@@ -68,6 +68,12 @@ function readData() {
 
             function bidItem() {
                 console.log("--------------BID ON AN ITEM------------");
+                let itemChoices = [];
+                connection.query("SELECT itemName FROM items", function(err, res) {
+                    for (let i=0; i < res.length; i++){
+                        itemChoices.push(res[i].itemName);
+                    }
+                })
                 readItems();
             }
 
