@@ -73,8 +73,44 @@ function readData() {
                     for (let i=0; i < res.length; i++){
                         itemChoices.push(res[i].itemName);
                     }
-                })
-                readItems();
+                    inquirer.prompt([
+                        {
+                            type: 'list',
+                            message: "Which item?",
+                            choices: itemChoices,
+                            name: "itemChoice"
+                        },
+                        {
+                            type: 'input',
+                            message: "What's your bid?",
+                            name: "itemBid"
+                        },
+                    ]).then(answers => {
+                        let selectedItem = answers.itemChoice;
+                        let newBid = answers.itemBid;
+                        createBid();
+                        
+                        function createBid() {
+                            console.log(`Updating ${selectedItem} with new bid of ${newBid}`);
+                            let query = connection.query(
+                                "UPDATE items SET ? WHERE ?",
+                                [
+                                    {
+                                        price: newBid
+                                    },
+                                    {
+                                        itemName: selectedItem
+                                    }
+                                ],
+                                function (err, res) {
+                                    if (err) throw err;
+                                    console.log(`--------SET NEW BID of ${newBid} ON ${selectedItem}-----------`);
+                                }
+                            );
+                            readItems();
+                        }
+                    });
+                });
             }
 
             function addItem() {
