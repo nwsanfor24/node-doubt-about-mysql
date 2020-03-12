@@ -37,3 +37,7 @@ function createItems() {
         });
     });
 }
+
+function logRow({ id, item, price, quantity }) {
+    console.log(`${id} | ${item} | ${price} | ${quantity}`);
+}
