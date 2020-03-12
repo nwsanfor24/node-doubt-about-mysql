@@ -15,14 +15,12 @@ var connection = mysql.createConnection({
 connection.connect(function (err) {
     if (err) throw err;
     console.log("connected as id " + connection.threadId);
-    console.table(res);
 
     Promise.all([
         createItems(),
-        readItems()
+        readData()
     ]).then( () => {
         console.log("All done!");
-        connection.end();
     }).catch(err => {
         console.log(err);
     });
@@ -45,7 +43,7 @@ function logRow({ id, item, price, quantity }) {
     console.log(`${id} | ${item} | ${price} | ${quantity}`);
 }
 
-function readItems() {
+function readData() {
     connection.query('SELECT * FROM items', function (err, res) {
         if (err) throw err;
         console.log("----------ITEMS----------")
