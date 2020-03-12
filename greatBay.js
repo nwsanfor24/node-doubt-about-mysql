@@ -64,7 +64,7 @@ function readItems() {
 
             if (action = "POST AN ITEM") {
                 addItem();
-            } else (action = "BID ON AN ITEM") {
+            } else if (action = "BID ON AN ITEM") {
                 bidItem();
             }
 
